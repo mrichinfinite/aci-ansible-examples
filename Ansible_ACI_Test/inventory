@@ -1,0 +1,7 @@
+[apic:vars]
+username=mr
+password=mypassword
+ansible_python_interpreter="/usr/bin/env python3"
+
+[apic]
+1.1.1.1
