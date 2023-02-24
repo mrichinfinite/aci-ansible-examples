@@ -1,0 +1,36 @@
+---
+- name: BIND/UNBIND L3OUT TO BDs in MR TENANT
+  hosts: apic
+  connection: local
+  gather_facts: False
+
+  tasks:
+
+    - name: Include Vars
+      include_vars: "vars.yml"
+
+    - name: Unbind Bridge Domain from L3Out
+      cisco.aci.aci_bd_to_l3out:
+        host: "{{ inventory_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        validate_certs: False
+        bd: "{{ item.bd }}"
+        l3out: "EIGRP-L3Out"
+        tenant: "mr"
+        state: "absent"
+      with_items: "{{ bridge_domains }}"  
+      tags: bd
+
+    - name: Bind Bridge Domain to L3Out
+      cisco.aci.aci_bd_to_l3out:
+        host: "{{ inventory_hostname }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        validate_certs: False
+        bd: "{{ item.bd }}"
+        l3out: "BGP-OSPF-L3Out"
+        tenant: "mr"
+        state: "present"
+      with_items: "{{ bridge_domains }}"  
+      tags: bd

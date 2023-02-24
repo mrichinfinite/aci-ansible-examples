@@ -1,0 +1,4 @@
+---
+bridge_domains:
+  - bd: "mr-bare-metal"
+  - bd: "mr-vm"
